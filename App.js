@@ -24,9 +24,11 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
+const phrase = 'hello';
+
 //Commet out this <----------
 //const { bip39Generate } = require('@polkadot/wasm-crypto');
-//const phrase = bip39Generate()
+//phrase = bip39Generate()
 
 const App = () => {
   return (
@@ -47,7 +49,7 @@ const App = () => {
               </Text>
             </View>
             <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>See Your Changes {phrase}</Text>
+              <Text style={styles.sectionTitle}>See Your Changes---> {phrase}</Text>
               <Text style={styles.sectionDescription}>
                 <ReloadInstructions />
               </Text>

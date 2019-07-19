@@ -17,7 +17,7 @@ npm start
 npm run ios
 ```
 
-### To Change react native code open App.js and Press CMD+R to refresh
+### To Change react native code open App.js and Press CMD+R to refresh in simulator
 
 
 ### Clean metro builder (On new install)

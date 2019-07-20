@@ -22,7 +22,7 @@ NODE_OPTIONS=--max_old_space_size=8192 yarn start
 
 Be aware that this takes a significant time for the first clean build. Make a coffee, drink a beer, go for a walk or play with the dog while it is building.
 
-In a new tab, start the emulator, in this case running iOs -
+In a new tab, start the emulator, in this case running iOS -
 
 ```
 yarn ios

@@ -2,7 +2,7 @@
 
 Adapted from [qalqi/AwesomeProject](https://github.com/qalqi/AwesomeProject)
 
-![screenshots](output.jpg)
+![screenshots](output.png)
 
 ### Setup & running
 

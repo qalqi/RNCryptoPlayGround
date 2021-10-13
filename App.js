@@ -6,70 +6,52 @@
  * @flow
  */
 
-import React, { Fragment } from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  StatusBar,
-} from 'react-native';
+import React, { useEffect, useState, Fragment } from 'react';
+import { StyleSheet, View, Text } from 'react-native';
+import { Colors } from 'react-native/Libraries/NewAppScreen';
 
-import {
-  Header,
-  LearnMoreLinks,
-  Colors,
-  DebugInstructions,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-
-const phrase = 'hello';
-
-//Commet out this <----------
-//const { bip39Generate } = require('@polkadot/wasm-crypto');
-//phrase = bip39Generate()
+import { Keyring } from '@polkadot/keyring';
+import { mnemonicGenerate, cryptoWaitReady } from '@polkadot/util-crypto';
 
 const App = () => {
+  const [info, setInfo] = useState({});
+
+  useEffect(() => {
+    cryptoWaitReady().then(() => {
+      try {
+        const keyring = new Keyring({ type: 'sr25519' });
+        const phrase = mnemonicGenerate(12);
+        const { address, type } = keyring.createFromUri(phrase);
+
+        setInfo({ address, phrase, type });
+      } catch (error) {
+        console.error(error.message)
+      }
+    });
+  }, []);
+
   return (
     <Fragment>
-      <StatusBar barStyle="dark-content" />
-      <SafeAreaView>
-        <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          style={styles.scrollView}>
-          <Header />
-
-          <View style={styles.body}>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Step One</Text>
-              <Text style={styles.sectionDescription}>
-                Edit <Text style={styles.highlight}>App.js</Text> to change this
-                screen and then come back to see your edits.
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>See Your Changes---> {phrase}</Text>
-              <Text style={styles.sectionDescription}>
-                <ReloadInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Debug</Text>
-              <Text style={styles.sectionDescription}>
-                <DebugInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Learn More</Text>
-              <Text style={styles.sectionDescription}>
-                Read the docs to discover what to do next:
-              </Text>
-            </View>
-            <LearnMoreLinks />
-          </View>
-        </ScrollView>
-      </SafeAreaView>
+      <View style={styles.body}>
+        <View style={styles.sectionContainer}>
+          <Text style={styles.sectionTitle}>phrase</Text>
+          <Text style={styles.sectionDescription}>
+            {info.phrase || '<unknown>'}
+          </Text>
+        </View>
+        <View style={styles.sectionContainer}>
+          <Text style={styles.sectionTitle}>address</Text>
+          <Text style={styles.sectionDescription}>
+            {info.address || '<unknown>'}
+          </Text>
+        </View>
+        <View style={styles.sectionContainer}>
+          <Text style={styles.sectionTitle}>type</Text>
+          <Text style={styles.sectionDescription}>
+            {info.type || '<unknown>'}
+          </Text>
+        </View>
+      </View>
     </Fragment>
   );
 };
